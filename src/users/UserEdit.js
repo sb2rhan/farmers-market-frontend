@@ -6,8 +6,12 @@ export const UserEdit = props => (
     <Edit {...props}>
         <SimpleForm>
             <TextInput source="id" disabled />
-            <TextInput source="name" />
-            <TextInput source="email" />
+            <TextInput source="userName" />
+            <TextInput source="firstName" />
+            <TextInput source="middleName" />
+            <TextInput source="lastName" />
+            <TextInput source="email" type="email" />
+            <TextInput source="phoneNumber" />
         </SimpleForm>
     </Edit>
 );
