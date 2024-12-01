@@ -4,7 +4,6 @@ import { Edit, SimpleForm, TextInput, SelectInput, NumberInput } from 'react-adm
 const OfferEdit = (props) => (
     <Edit {...props}>
         <SimpleForm>
-            <TextInput disabled source="id" />
             <TextInput source="productId" />
             <TextInput source="createdById" />
             <TextInput source="offeredToId" />

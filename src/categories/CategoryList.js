@@ -1,5 +1,7 @@
 import * as React from 'react';
-import { List, Datagrid, TextField, EditButton, DeleteButton } from 'react-admin';
+import { List, Datagrid, TextField, ImageField } from 'react-admin';
+import { Box, Button } from '@mui/material';
+import { Edit, Delete } from '@mui/icons-material';
 
 const CategoryList = (props) => (
     <List {...props}>
@@ -7,9 +9,15 @@ const CategoryList = (props) => (
             <TextField source="id" />
             <TextField source="categoryName" label="Category" />
             <TextField source="categoryDescription" label="Description"/>
-            <TextField source="categoryImgPath" label="Image path"/>
-            <EditButton />
-            <DeleteButton />
+            <ImageField source="categoryImgPath"/>
+            <Box display="flex" justifyContent="flex-end" gap="10px">
+                <Button variant="contained" color="primary" startIcon={<Edit />}>
+                    Edit
+                </Button>
+                <Button variant="outlined" color="secondary" startIcon={<Delete />}>
+                    Delete
+                </Button>
+            </Box>
         </Datagrid>
     </List>
 );

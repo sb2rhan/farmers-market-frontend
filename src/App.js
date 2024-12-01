@@ -3,10 +3,9 @@ import * as React from 'react';
 import { Admin, Resource, fetchUtils } from 'react-admin';
 import restProvider from 'ra-data-simple-rest';
 import authProvider from './providers/authProvider';
-import CustomMenu from './CustomMenu';
 import './App.css';
-
-
+import LoginForm from './components/LoginForm'
+import { CustomLayout } from './CustomLayout'; // Named import
 import { ProductList } from './products/ProductList';
 import { ProductEdit } from './products/ProductEdit';
 import  ProductCreate  from './products/ProductCreate';
@@ -26,20 +25,39 @@ import CategoryCreate from './categories/CategoryCreate';
 import FarmList from './farms/FarmList';
 import FarmEdit from './farms/FarmEdit';
 import FarmCreate from './farms/FarmCreate';
+import { Box } from "@mui/material";
 
 const httpClient = (url, options = {}) => {
     if (!options.headers) {
         options.headers = new Headers({ Accept: 'application/json' });
     }
-    const { token } = JSON.parse(localStorage.getItem('auth'));
-    options.headers.set('Authorization', `Bearer ${token}`);
+    const auth = JSON.parse(localStorage.getItem('auth'));
+    if (auth && auth.token) {
+        options.headers.set('Authorization', `Bearer ${auth.token}`);
+    } else {
+        console.error('No authorization token found');
+    }
+
     return fetchUtils.fetchJson(url, options);
 };
 
-const dataProvider = restProvider('https://farmersmarketapi-e0c4d5dpc7e7fwbd.northeurope-01.azurewebsites.net/api/v1', httpClient);
 
+const dataProvider = restProvider('https://farmersmarketapi-e0c4d5dpc7e7fwbd.northeurope-01.azurewebsites.net/api/v1', httpClient);
+const CustomPage = ({ children, backgroundImage }) => (
+    <Box
+      sx={{
+        backgroundImage: `url(${backgroundImage})`,
+        backgroundSize: "cover",
+        backgroundAttachment: "fixed",
+        minHeight: "100vh",
+      }}
+    >
+      {children}
+    </Box>
+  );
+  
 const App = () => (
-    <Admin menu={CustomMenu} dashboard={Dashboard} theme={theme} dataProvider={dataProvider} authProvider={authProvider}>
+    <Admin loginPage={LoginForm} dashboard={Dashboard} theme={theme} dataProvider={dataProvider} authProvider={authProvider} layout={CustomLayout}>
         <Resource
             name="Users"
             list={UserList}

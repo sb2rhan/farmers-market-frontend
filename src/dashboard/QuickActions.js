@@ -19,7 +19,7 @@ const QuickActions = () => {
   }
 
   useEffect(() => {
-    axios.get('https://farmersmarketapi-e0c4d5dpc7e7fwbd.northeurope-01.azurewebsites.net/api/v1/Users', config)
+    axios.get('https://farmersmarketapi-e0c4d5dpc7e7fwbd.northeurope-01.azurewebsites.net/api/v1/Users/farmers', config)
       .then(response => {
         setFarmers(response.data);
         setLoading(false);
@@ -30,16 +30,15 @@ const QuickActions = () => {
       });
   }, []);
 
-  const handleApprove = (id) => {
-    axios.put(`https://farmersmarketapi-e0c4d5dpc7e7fwbd.northeurope-01.azurewebsites.net/api/v1/Users/${id}`, {
-      farmerApproved: false
-    })
+  const handleApprove = (f) => {
+    f.farmerApproved = false
+    axios.put(`https://farmersmarketapi-e0c4d5dpc7e7fwbd.northeurope-01.azurewebsites.net/api/v1/Users/${f.id}`, f)
     .then(response => {
-      alert(`Farmer ${id} approved successfully!`);
+      alert(`Farmer ${f.id} approved successfully!`);
       // Optionally refresh the user list or update the state accordingly
     })
     .catch(error => {
-      alert(`Error approving farmer ${id}: ${error.message}`);
+      alert(`Error approving farmer ${f.id}: ${error.message}`);
     });
   };
 
@@ -55,7 +54,7 @@ const QuickActions = () => {
                     key={f.id}
                     disableGutters
                     secondaryAction={
-                        <IconButton aria-label="approve" onClick={() => handleApprove(f.id)}>
+                        <IconButton aria-label="approve" onClick={() => handleApprove(f)}>
                           Approve
                           <ApprovalIcon />
                         </IconButton>

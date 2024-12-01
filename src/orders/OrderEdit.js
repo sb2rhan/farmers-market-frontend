@@ -5,7 +5,6 @@ import { Edit, SimpleForm, TextInput, SelectInput, DateInput } from 'react-admin
 const OrderEdit = (props) => (
     <Edit {...props}>
         <SimpleForm>
-            <TextInput disabled source="id" />
             <TextInput disabled source="buyerId" label="Customer Id" />
             <SelectInput source="deliveryMethod" choices={[
                 { id: 0, name: 'Home' },

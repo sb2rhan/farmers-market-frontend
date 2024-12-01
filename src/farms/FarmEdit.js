@@ -4,7 +4,6 @@ import { Edit, SelectInput, SimpleForm, TextInput } from 'react-admin';
 const FarmEdit = (props) => (
     <Edit {...props}>
         <SimpleForm>
-            <TextInput disabled source="id" />
             <TextInput source="farmName" label="Farm" />
             <TextInput source="farmerId" label="Owner Id"/>
             <TextInput source="location" label="Location"/>
